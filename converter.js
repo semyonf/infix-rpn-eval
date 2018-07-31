@@ -14,7 +14,6 @@ exports.toPostfix = function (infix) {
     '(': { precedence: 0, isBracket: true },
   });
 
-  const inputString = 'x ^ y / 5 * z + 10';
   const tokens = infix.split(' ');
   const outputStack = [];
   const operatorStack = [];
