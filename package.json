@@ -1,0 +1,19 @@
+{
+  "name": "infix-postfix-converter",
+  "version": "1.0.0",
+  "description": "Convert math expressions between notations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taxnuke/infix-postfix-converter.git"
+  },
+  "author": "Semyon Fomin <taxnuke@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taxnuke/infix-postfix-converter/issues"
+  },
+  "homepage": "https://github.com/taxnuke/infix-postfix-converter#readme"
+}
