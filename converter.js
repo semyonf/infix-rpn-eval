@@ -1,58 +1,79 @@
-const Associativity = Object.freeze({ left: 'l', right: 'r' });
-const operators = Object.freeze({
-  '^': { string: '^', prec: 4, assoc: Associativity.right },
-  '*': { string: '*', prec: 3, assoc: Associativity.left },
-  '/': { string: '/', prec: 3, assoc: Associativity.left },
-  '+': { string: '+', prec: 2, assoc: Associativity.left },
-  '-': { string: '-', prec: 2, assoc: Associativity.left },
-});
+/**
+ * Convert from infix to postfix notation
+ * @param infix {string} tokens should be space separated
+ * @returns {string}
+ */
+exports.toPostfix = function (infix) {
+  const Associativity = Object.freeze({ left: 'l', right: 'r' });
+  const operators = Object.freeze({
+    '^': { string: '^', precedence: 4, associativity: Associativity.right },
+    '*': { string: '*', precedence: 3, associativity: Associativity.left },
+    '/': { string: '/', precedence: 3, associativity: Associativity.left },
+    '+': { string: '+', precedence: 2, associativity: Associativity.left },
+    '-': { string: '-', precedence: 2, associativity: Associativity.left },
+    '(': { precedence: 0, isBracket: true },
+  });
 
-const inputString = 'a + b * c - d';
-const tokens = inputString.split(' ');
-const outputStack = [];
-const operatorStack = [];
+  const inputString = 'x ^ y / 5 * z + 10';
+  const tokens = infix.split(' ');
+  const outputStack = [];
+  const operatorStack = [];
 
-for (const token of tokens) {
-  if (!(token in operators)) {
-    outputStack.push(token);
-    continue;
-  }
+  for (const token of tokens) {
+    if (!(token in operators)) {
+      if (token === ')') {
+        while (!operatorStack[operatorStack.length - 1].isBracket) {
+          outputStack.push(operatorStack.pop().string);
+        }
 
-  const op1 = operators[token];
+        operatorStack.pop();
+      } else {
+        outputStack.push(token);
+      }
 
-  if (!operatorStack.length) {
-    operatorStack.push(op1);
-    continue;
-  }
+      continue;
+    }
 
-  const op2 = operatorStack[operatorStack.length - 1];
+    const op1 = operators[token];
 
-  if (op2.prec < op1.prec) {
-    operatorStack.push(op1);
-    continue;
-  }
+    if (!operatorStack.length || op1.isBracket) {
+      operatorStack.push(op1);
+      continue;
+    }
 
-  while (operatorStack.length) {
     const op2 = operatorStack[operatorStack.length - 1];
 
-    if (
-      (op1.assoc = Associativity.left && op1.prec <= op2.prec)
-      ||
-      (op1.assoc = Associativity.right && op1.prec < op2.prec)
-    ) {
-      operatorStack.pop();
-      outputStack.push(op2.string);
+    if (op2.precedence < op1.precedence) {
+      operatorStack.push(op1);
+      continue;
     }
+
+    while (operatorStack.length) {
+      const op2 = operatorStack[operatorStack.length - 1];
+
+      if (
+        (op1.associativity === Associativity.left &&
+          op1.precedence <= op2.precedence)
+        ||
+        (op1.associativity === Associativity.right &&
+          op1.precedence < op2.precedence)
+      ) {
+        operatorStack.pop();
+        outputStack.push(op2.string);
+      } else {
+        break;
+      }
+    }
+
+    operatorStack.push(op1);
   }
 
-  operatorStack.push(op1);
-}
+  const res = outputStack
+    .concat(
+      operatorStack
+        .reverse()
+        .map(x => x.string)
+    );
 
-const res = outputStack
-  .concat(
-    operatorStack
-      .reverse()
-      .map(x => x.string)
-  );
-
-console.log(res);
+  return res.join('');
+};
