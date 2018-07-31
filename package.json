@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/taxnuke/infix-postfix-converter/issues"
   },
-  "homepage": "https://github.com/taxnuke/infix-postfix-converter#readme"
+  "homepage": "https://github.com/taxnuke/infix-postfix-converter#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
 }
