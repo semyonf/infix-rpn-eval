@@ -1,9 +1,42 @@
 /**
+ * Evaluate postfix expression
+ * @param postfix tokens must be space separated
+ * @returns {number}
+ */
+exports.evaluatePostfix = function (postfix) {
+  const tokens = postfix.split(' ');
+  const stack = [];
+
+  for (const token of tokens) {
+    if (!['+', '-', '/', '*', '^'].includes(token)) {
+      stack.push(parseFloat(token));
+    } else {
+      const operands = [stack.pop(), stack.pop()].reverse();
+      stack.push(operands.reduce((prev, curr) => {
+        switch (token) {
+          case '+': return prev + curr;
+          case '-': return prev - curr;
+          case '*': return prev * curr;
+          case '/': return prev / curr;
+          case '^': return Math.pow(prev, curr);
+        }
+      }));
+    }
+  }
+
+  return stack.pop();
+};
+
+/**
  * Convert from infix to postfix notation
- * @param infix {string} tokens should be space separated
+ * @param infix {string} tokens must be space separated
  * @returns {string}
  */
 exports.toPostfix = function (infix) {
+  /**
+   * todo: implement constants e.g. PI, E, TAU
+   * todo: implement functions e.g. sin cos tg
+   */
   const Associativity = Object.freeze({ left: 'l', right: 'r' });
   const operators = Object.freeze({
     '^': { string: '^', precedence: 4, associativity: Associativity.right },
