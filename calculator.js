@@ -14,11 +14,16 @@ exports.evaluatePostfix = function (postfix) {
       const operands = [stack.pop(), stack.pop()].reverse();
       stack.push(operands.reduce((prev, curr) => {
         switch (token) {
-          case '+': return prev + curr;
-          case '-': return prev - curr;
-          case '*': return prev * curr;
-          case '/': return prev / curr;
-          case '^': return Math.pow(prev, curr);
+          case '+':
+            return prev + curr;
+          case '-':
+            return prev - curr;
+          case '*':
+            return prev * curr;
+          case '/':
+            return prev / curr;
+          case '^':
+            return Math.pow(prev, curr);
         }
       }));
     }
@@ -37,7 +42,7 @@ exports.toPostfix = function (infix) {
    * todo: implement constants e.g. PI, E, TAU
    * todo: implement functions e.g. sin cos tg
    */
-  const Associativity = Object.freeze({ left: 'l', right: 'r' });
+  const Associativity = Object.freeze({ left: Symbol(), right: Symbol() });
   const operators = Object.freeze({
     '^': { string: '^', precedence: 4, associativity: Associativity.right },
     '*': { string: '*', precedence: 3, associativity: Associativity.left },
@@ -52,7 +57,28 @@ exports.toPostfix = function (infix) {
   const operatorStack = [];
 
   for (const token of tokens) {
-    if (!(token in operators)) {
+    if (token in operators) {
+      const op1 = operators[token];
+
+      while (operatorStack.length) {
+        const op2 = operatorStack[operatorStack.length - 1];
+
+        if (
+          (op1.associativity === Associativity.left &&
+            op1.precedence <= op2.precedence)
+          ||
+          (op1.associativity === Associativity.right &&
+            op1.precedence < op2.precedence)
+        ) {
+          operatorStack.pop();
+          outputStack.push(op2.string);
+        } else {
+          break;
+        }
+      }
+
+      operatorStack.push(op1);
+    } else {
       if (token === ')') {
         while (!operatorStack[operatorStack.length - 1].isBracket) {
           outputStack.push(operatorStack.pop().string);
@@ -61,40 +87,7 @@ exports.toPostfix = function (infix) {
       } else {
         outputStack.push(token);
       }
-
-      continue;
     }
-
-    const op1 = operators[token];
-
-    if (!operatorStack.length || op1.isBracket) {
-      operatorStack.push(op1);
-      continue;
-    }
-
-    const op2 = operatorStack[operatorStack.length - 1];
-
-    if (op2.precedence < op1.precedence) {
-      operatorStack.push(op1);
-      continue;
-    }
-
-    while (operatorStack.length) {
-      const op2 = operatorStack[operatorStack.length - 1];
-      if (
-        (op1.associativity === Associativity.left &&
-          op1.precedence <= op2.precedence)
-        ||
-        (op1.associativity === Associativity.right &&
-          op1.precedence < op2.precedence)
-      ) {
-        operatorStack.pop();
-        outputStack.push(op2.string);
-      } else {
-        break;
-      }
-    }
-    operatorStack.push(op1);
   }
 
   const res = outputStack
