@@ -24,7 +24,6 @@ exports.toPostfix = function (infix) {
         while (!operatorStack[operatorStack.length - 1].isBracket) {
           outputStack.push(operatorStack.pop().string);
         }
-
         operatorStack.pop();
       } else {
         outputStack.push(token);
@@ -49,7 +48,6 @@ exports.toPostfix = function (infix) {
 
     while (operatorStack.length) {
       const op2 = operatorStack[operatorStack.length - 1];
-
       if (
         (op1.associativity === Associativity.left &&
           op1.precedence <= op2.precedence)
@@ -63,7 +61,6 @@ exports.toPostfix = function (infix) {
         break;
       }
     }
-
     operatorStack.push(op1);
   }
 
@@ -74,5 +71,5 @@ exports.toPostfix = function (infix) {
         .map(x => x.string)
     );
 
-  return res.join('');
+  return res.join(' ');
 };
