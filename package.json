@@ -1,10 +1,10 @@
 {
   "name": "infix-postfix-converter",
   "version": "1.0.0",
-  "description": "Convert math expressions between notations",
+  "description": "Convert math expressions between notations and more",
   "main": "converter.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha *.spec.js"
   },
   "repository": {
     "type": "git",
