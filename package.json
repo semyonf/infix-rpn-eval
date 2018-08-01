@@ -4,7 +4,8 @@
   "description": "Convert math expressions between notations and more",
   "main": "converter.js",
   "scripts": {
-    "test": "mocha *.spec.js"
+    "test": "mocha",
+    "mutate": "stryker run"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,12 @@
   },
   "homepage": "https://github.com/taxnuke/infix-postfix-converter#readme",
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "stryker": "^0.25.1",
+    "stryker-api": "^0.18.0",
+    "stryker-html-reporter": "^0.15.0",
+    "stryker-javascript-mutator": "^0.8.0",
+    "stryker-mocha-framework": "^0.11.0",
+    "stryker-mocha-runner": "^0.13.0"
   }
 }

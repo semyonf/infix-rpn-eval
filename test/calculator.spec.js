@@ -1,5 +1,5 @@
 const assert = require('assert');
-const calc = require('./calculator');
+const calc = require('../calculator');
 
 describe('Infix to postfix conversion', () => {
   const expressions = new Map([
