@@ -38,18 +38,45 @@ exports.evaluatePostfix = function (postfix) {
  * @returns {string}
  */
 exports.toPostfix = function (infix) {
+  const Associativity = Object.freeze({ left: Symbol(), right: Symbol() });
+  const operations = new Map([
+    ['exponentiation',
+      { operator: '^', precedence: 4, associativity: Associativity.right }
+    ],
+    ['multiplication',
+      { operator: '*', precedence: 3, associativity: Associativity.left }
+    ],
+    ['division',
+      { operator: '/', precedence: 3, associativity: Associativity.left }
+    ],
+    ['addition',
+      { operator: '+', precedence: 2, associativity: Associativity.left }
+    ],
+    ['subtraction',
+      { operator: '-', precedence: 2, associativity: Associativity.left }
+    ],
+    ['bracket',
+      { precedence: 0, isBracket: true }
+    ],
+  ]);
+
+  operations.set = operations.clear = operations.delete = () => {
+    throw new Error('Map is frozen!');
+  };
+
   /**
    * todo: implement constants e.g. PI, E, TAU
    * todo: implement functions e.g. sin cos tg
+   * todo: implement nested brackets e.g. ( a + b * ( c - d) - e) + f
    */
-  const Associativity = Object.freeze({ left: Symbol(), right: Symbol() });
   const operators = Object.freeze({
-    '^': { string: '^', precedence: 4, associativity: Associativity.right },
-    '*': { string: '*', precedence: 3, associativity: Associativity.left },
-    '/': { string: '/', precedence: 3, associativity: Associativity.left },
-    '+': { string: '+', precedence: 2, associativity: Associativity.left },
-    '-': { string: '-', precedence: 2, associativity: Associativity.left },
-    '(': { precedence: 0, isBracket: true },
+    '^': operations.get('exponentiation'),
+    '*': operations.get('multiplication'),
+    '/': operations.get('division'),
+    ':': operations.get('division'),
+    '+': operations.get('addition'),
+    '-': operations.get('subtraction'),
+    '(': operations.get('bracket'),
   });
 
   const tokens = infix.split(' ');
@@ -71,7 +98,7 @@ exports.toPostfix = function (infix) {
             op1.precedence < op2.precedence)
         ) {
           operatorStack.pop();
-          outputStack.push(op2.string);
+          outputStack.push(op2.operator);
         } else {
           break;
         }
@@ -81,7 +108,7 @@ exports.toPostfix = function (infix) {
     } else {
       if (token === ')') {
         while (!operatorStack[operatorStack.length - 1].isBracket) {
-          outputStack.push(operatorStack.pop().string);
+          outputStack.push(operatorStack.pop().operator);
         }
         operatorStack.pop();
       } else {
@@ -94,7 +121,7 @@ exports.toPostfix = function (infix) {
     .concat(
       operatorStack
         .reverse()
-        .map(x => x.string)
+        .map(x => x.operator)
     );
 
   return res.join(' ');
