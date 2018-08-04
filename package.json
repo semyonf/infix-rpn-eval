@@ -2,7 +2,7 @@
   "name": "infix-postfix-converter",
   "version": "1.0.0",
   "description": "Convert math expressions between notations and more",
-  "main": "converter.js",
+  "main": "main.js",
   "scripts": {
     "test": "mocha",
     "mutate": "stryker run"

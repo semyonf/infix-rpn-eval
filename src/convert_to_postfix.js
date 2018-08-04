@@ -1,44 +1,9 @@
 /**
- * Evaluate postfix expression
- * @param postfix tokens must be space separated
- * @returns {number}
- */
-exports.evaluatePostfix = function (postfix) {
-  const tokens = postfix.split(' ');
-  const stack = [];
-
-  for (const token of tokens) {
-    if (!['+', '-', '/', '*', '^', ':'].includes(token)) {
-      stack.push(parseFloat(token));
-    } else {
-      const operands = [stack.pop(), stack.pop()].reverse();
-      stack.push(operands.reduce((prev, curr) => {
-        switch (token) {
-          case '+':
-            return prev + curr;
-          case '-':
-            return prev - curr;
-          case '*':
-            return prev * curr;
-          case '/':
-          case ':':
-            return prev / curr;
-          case '^':
-            return Math.pow(prev, curr);
-        }
-      }));
-    }
-  }
-
-  return stack.pop();
-};
-
-/**
  * Convert from infix to postfix notation
  * @param infix {string} tokens must be space separated
  * @returns {string}
  */
-exports.toPostfix = function (infix) {
+module.exports = function (infix) {
   const Associativity = Object.freeze({ left: Symbol(), right: Symbol() });
   const operations = new Map([
     ['exponentiation',
@@ -61,9 +26,10 @@ exports.toPostfix = function (infix) {
     ],
   ]);
 
-  operations.set = operations.clear = operations.delete = () => {
-    throw new Error('Map is frozen!');
-  };
+  // Uncomment in case of possible operations extension
+  // operations.set = operations.clear = operations.delete = () => {
+  //   throw new Error('Map is frozen!');
+  // };
 
   /**
    * todo: implement constants e.g. PI, E, TAU
