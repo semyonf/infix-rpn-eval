@@ -7,11 +7,6 @@ module.exports = function (infix) {
   const Assoc = require('./Associativity');
   const operations = require('./Operations');
 
-  // Uncomment in case of possible operations extension
-  // operations.set = operations.clear = operations.delete = () => {
-  //   throw new Error('Map is frozen!');
-  // };
-
   /**
    * todo: implement nested brackets e.g. ( a + b * ( c - d) - e) + f
    */

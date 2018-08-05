@@ -1,6 +1,5 @@
 const Associativity = require('./Associativity');
-
-module.exports = new Map([
+const operations = new Map([
   ['exponentiation',
     { operator: '^', precedence: 4, associativity: Associativity.right }
   ],
@@ -20,3 +19,9 @@ module.exports = new Map([
     { precedence: 0, isBracket: true }
   ],
 ]);
+
+operations.set = operations.clear = operations.delete = () => {
+  throw new Error('This map is frozen!');
+};
+
+module.exports = operations;
