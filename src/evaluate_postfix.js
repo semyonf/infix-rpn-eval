@@ -8,7 +8,7 @@ module.exports = function (postfix) {
   const stack = [];
 
   for (const token of tokens) {
-    if (!['+', '-', '/', '*', '^', ':'].includes(token)) {
+    if (!['+', '-', '/', '*', '^'].includes(token)) {
       stack.push(parseFloat(token));
     } else {
       const operands = [stack.pop(), stack.pop()].reverse();
@@ -21,7 +21,6 @@ module.exports = function (postfix) {
           case '*':
             return prev * curr;
           case '/':
-          case ':':
             return prev / curr;
           case '^':
             return Math.pow(prev, curr);

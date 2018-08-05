@@ -18,7 +18,6 @@ describe('Evaluation of postfix expressions', () => {
   it('Evaluates division', () => {
     assert.strictEqual(calc.evaluatePostfix('3 3 /'), 1);
     assert.strictEqual(calc.evaluatePostfix('9 3 / 3 /'), 1);
-    assert.strictEqual(calc.evaluatePostfix('9 3 : 3 /'), 1);
   });
 
   it('Evaluates multiplication', () => {

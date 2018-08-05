@@ -2,10 +2,10 @@ const assert = require('assert');
 const calc = require('../main');
 const expressionMaps = require('./resources/expression_maps');
 
-describe('Infix to postfix conversion', () => {
+describe('Postfix to infix conversion', () => {
   for (const [infix, postfix] of expressionMaps) {
-    it(`Converts ${infix}`, () => {
-      assert.strictEqual(calc.toPostfix(infix), postfix);
+    it(`Converts ${postfix}`, () => {
+      assert.strictEqual(calc.toInfix(postfix), infix);
     });
   }
 });

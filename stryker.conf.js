@@ -5,7 +5,8 @@ module.exports = function (config) {
     reporter: ["html", "clear-text", "progress"],
     mutate: [
       'src/**/*.js',
-      '!src/convert_to_infix.js'
+      '!src/Associativity.js',
+      '!src/operations.js'
     ],
     files: [
       'src/**/*.js',

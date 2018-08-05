@@ -4,27 +4,8 @@
  * @returns {string}
  */
 module.exports = function (infix) {
-  const Associativity = Object.freeze({ left: Symbol(), right: Symbol() });
-  const operations = new Map([
-    ['exponentiation',
-      { operator: '^', precedence: 4, associativity: Associativity.right }
-    ],
-    ['multiplication',
-      { operator: '*', precedence: 3, associativity: Associativity.left }
-    ],
-    ['division',
-      { operator: '/', precedence: 3, associativity: Associativity.left }
-    ],
-    ['addition',
-      { operator: '+', precedence: 2, associativity: Associativity.left }
-    ],
-    ['subtraction',
-      { operator: '-', precedence: 2, associativity: Associativity.left }
-    ],
-    ['bracket',
-      { precedence: 0, isBracket: true }
-    ],
-  ]);
+  const Assoc = require('./Associativity');
+  const operations = require('./Operations');
 
   // Uncomment in case of possible operations extension
   // operations.set = operations.clear = operations.delete = () => {
@@ -32,15 +13,12 @@ module.exports = function (infix) {
   // };
 
   /**
-   * todo: implement constants e.g. PI, E, TAU
-   * todo: implement functions e.g. sin cos tg
    * todo: implement nested brackets e.g. ( a + b * ( c - d) - e) + f
    */
   const operators = Object.freeze({
     '^': operations.get('exponentiation'),
     '*': operations.get('multiplication'),
     '/': operations.get('division'),
-    ':': operations.get('division'),
     '+': operations.get('addition'),
     '-': operations.get('subtraction'),
     '(': operations.get('bracket'),
@@ -58,10 +36,10 @@ module.exports = function (infix) {
         const op2 = operatorStack[operatorStack.length - 1];
 
         if (
-          (op1.associativity === Associativity.left &&
+          (op1.associativity === Assoc.left &&
             op1.precedence <= op2.precedence)
           ||
-          (op1.associativity === Associativity.right &&
+          (op1.associativity === Assoc.right &&
             op1.precedence < op2.precedence)
         ) {
           operatorStack.pop();
