@@ -5,7 +5,7 @@
  */
 module.exports = function (infix) {
   const Assoc = require('./Associativity');
-  const operations = require('./Operations');
+  const operations = require('./operations');
 
   /**
    * todo: implement nested brackets e.g. ( a + b * ( c - d) - e) + f

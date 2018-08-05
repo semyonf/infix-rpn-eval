@@ -5,7 +5,7 @@
  */
 module.exports = function (postfix) {
   const Assoc = require('./Associativity');
-  const operations = require('./Operations');
+  const operations = require('./operations');
   const operators = Object.freeze({
     '^': operations.get('exponentiation'),
     '*': operations.get('multiplication'),
