@@ -55,5 +55,25 @@ describe('Evaluation of postfix expressions', () => {
       ),
       8
     );
+
+    assert.strictEqual(
+      calc.evaluatePostfix(
+        calc.toPostfix('( 4 / ( ( 2 + 2 ) * ( 4 - 2 ) ) )')
+      ),
+      0.5
+    );
+
+    assert.strictEqual(
+      calc.evaluatePostfix(
+        calc.toPostfix(
+          calc.toInfix(
+            calc.toPostfix(
+              '( 2 + 2 ) * 3'
+            )
+          )
+        )
+      ),
+      12
+    );
   });
 });

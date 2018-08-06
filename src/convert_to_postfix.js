@@ -7,9 +7,6 @@ module.exports = function (infix) {
   const Assoc = require('./Associativity');
   const operations = require('./operations');
 
-  /**
-   * todo: implement nested brackets e.g. ( a + b * ( c - d) - e) + f
-   */
   const operators = Object.freeze({
     '^': operations.get('exponentiation'),
     '*': operations.get('multiplication'),
