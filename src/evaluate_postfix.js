@@ -11,7 +11,7 @@ module.exports = function (postfix) {
     if (!['+', '-', '/', '*', '^'].includes(token)) {
       stack.push(parseFloat(token));
     } else {
-      const operands = [stack.pop(), stack.pop()].reverse();
+      const operands = stack.splice(-2, 2);
       stack.push(operands.reduce((prev, curr) => {
         switch (token) {
           case '+':
