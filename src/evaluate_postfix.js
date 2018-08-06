@@ -1,3 +1,5 @@
+const constants = require('./constants');
+
 /**
  * Evaluate postfix expression
  * @param postfix tokens must be space separated
@@ -7,8 +9,15 @@ module.exports = function (postfix) {
   const tokens = postfix.split(' ');
   const stack = [];
 
-  for (const token of tokens) {
+  for (let token of tokens) {
     if (!['+', '-', '/', '*', '^'].includes(token)) {
+
+      token = token.toLowerCase();
+
+      if (constants.has(token)) {
+        token = constants.get(token);
+      }
+
       stack.push(parseFloat(token));
     } else {
       const operands = stack.splice(-2, 2);

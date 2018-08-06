@@ -6,7 +6,8 @@ module.exports = function (config) {
     mutate: [
       'src/**/*.js',
       '!src/Associativity.js',
-      '!src/operations.js'
+      '!src/operations.js',
+      '!src/constants.js'
     ],
     files: [
       'src/**/*.js',

@@ -58,6 +58,20 @@ describe('Evaluation of postfix expressions', () => {
 
     assert.strictEqual(
       calc.evaluatePostfix(
+        calc.toPostfix('pi')
+      ),
+      Math.PI
+    );
+
+    assert.strictEqual(
+      calc.evaluatePostfix(
+        calc.toPostfix('pi ^ 2 / 2')
+      ),
+      4.934802200544679
+    );
+
+    assert.strictEqual(
+      calc.evaluatePostfix(
         calc.toPostfix('( 4 / ( ( 2 + 2 ) * ( 4 - 2 ) ) )')
       ),
       0.5
