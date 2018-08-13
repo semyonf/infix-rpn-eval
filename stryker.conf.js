@@ -1,8 +1,8 @@
 module.exports = function (config) {
   config.set({
-    testRunner: "mocha",
-    mutator: "javascript",
-    reporter: ["html", "clear-text", "progress"],
+    testRunner: 'mocha',
+    mutator: 'javascript',
+    reporter: ['html', 'clear-text', 'progress'],
     mutate: [
       'src/**/*.js',
       '!src/Associativity.js',
@@ -14,8 +14,8 @@ module.exports = function (config) {
       'test/**/*.js',
       'main.js'
     ],
-    packageManager: "npm",
-    testFramework: "mocha",
-    coverageAnalysis: "perTest"
+    packageManager: 'npm',
+    testFramework: 'mocha',
+    coverageAnalysis: 'perTest'
   });
 };

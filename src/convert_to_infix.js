@@ -72,6 +72,8 @@ module.exports = function (postfix) {
           ...operands
         );
 
+        // Tokens contain mixed data types so
+        // noinspection JSCheckFunctionSignatures
         tokens.splice(i - 2, 3, opNode);
 
         break;

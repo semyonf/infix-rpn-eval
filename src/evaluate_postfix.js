@@ -1,3 +1,6 @@
+/**
+ * @type {Map}
+ */
 const constants = require('./constants');
 
 /**
@@ -23,16 +26,16 @@ module.exports = function (postfix) {
       const operands = stack.splice(-2, 2);
       stack.push(operands.reduce((prev, curr) => {
         switch (token) {
-          case '+':
-            return prev + curr;
-          case '-':
-            return prev - curr;
-          case '*':
-            return prev * curr;
-          case '/':
-            return prev / curr;
-          case '^':
-            return Math.pow(prev, curr);
+        case '+':
+          return prev + curr;
+        case '-':
+          return prev - curr;
+        case '*':
+          return prev * curr;
+        case '/':
+          return prev / curr;
+        case '^':
+          return Math.pow(prev, curr);
         }
       }));
     }

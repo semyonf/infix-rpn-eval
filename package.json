@@ -4,9 +4,9 @@
   "description": "Convert math expressions between notations and more",
   "main": "main.js",
   "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
     "test": "mocha",
-    "mutate": "stryker run",
-    "lint": "eslint src/*.js"
+    "mutate": "stryker run"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/taxnuke/infix-postfix-converter#readme",
   "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0",
     "stryker": "^0.25.1",
     "stryker-api": "^0.18.0",
