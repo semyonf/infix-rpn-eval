@@ -1,7 +1,8 @@
 {
-  "name": "infix-postfix-converter",
-  "version": "1.0.0",
-  "description": "Convert math expressions between notations and more",
+  "name": "infix-rpn-eval",
+  "version": "0.0.1",
+  "description": "Convert math expressions between postfix (RPN) and infix notations and evaluate them",
+  "keywords": ["infix", "postfix", "dijkstra", "shunting", "yard", "calculator", "rpn"],
   "main": "main.js",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
