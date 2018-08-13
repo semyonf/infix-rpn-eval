@@ -1,6 +1,8 @@
 .idea
 .stryker-tmp
 reports
+dist
+.cache
 
 # Logs
 logs
