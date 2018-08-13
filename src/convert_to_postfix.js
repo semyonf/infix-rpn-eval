@@ -20,6 +20,9 @@ module.exports = function (infix) {
   const outputStack = [];
   const operatorStack = [];
 
+  /**
+   * todo: should throw exceptions on missing or excessive brackets
+   */
   for (const token of tokens) {
     if (token in operators) {
       const op1 = operators[token];

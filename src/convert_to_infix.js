@@ -57,8 +57,7 @@ module.exports = function (postfix) {
   const tokens = postfix.split(' ');
 
   while (tokens.length > 1) {
-    // ;; is for 100% MSI by Stryker
-    for (let i = 0;; ++i) {
+    for (const i in tokens) {
       const token = tokens[i];
 
       if (token in operators) {
@@ -72,7 +71,7 @@ module.exports = function (postfix) {
           ...operands
         );
 
-        // Tokens contain mixed data types so
+        // Tokens contain mixed data types, so -
         // noinspection JSCheckFunctionSignatures
         tokens.splice(i - 2, 3, opNode);
 
