@@ -1,6 +1,6 @@
 /**
  * Convert from postfix to infix notation
- * @param postfix {string} tokens must be space separated
+ * @param {string} postfix tokens must be space separated
  * @returns {string}
  */
 module.exports = function (postfix) {

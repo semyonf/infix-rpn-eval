@@ -27,21 +27,21 @@ infixRpnEval.evaluatePostfix('2 3 3 * +') // 11
 ```js
 /**
  * Convert from infix to postfix notation
- * @param infix {string} tokens must be space separated
+ * @param {string} infix tokens must be space separated
  * @returns {string}
  */
 infixRpnEval.toPostfix = (infix) {...}
 
 /**
  * Convert from postfix to infix notation
- * @param postfix {string} tokens must be space separated
+ * @param {string} postfix tokens must be space separated
  * @returns {string}
  */
 infixRpnEval.toPostfix = (postfix) {...}
 
 /**
  * Evaluate postfix expression
- * @param postfix {string} tokens must be space separated
+ * @param {string} postfix tokens must be space separated
  * @returns {number}
  */
 infixRpnEval.evaluatePostfix = (postfix) {...}
