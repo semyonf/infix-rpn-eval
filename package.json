@@ -1,6 +1,6 @@
 {
   "name": "infix-rpn-eval",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Convert math expressions between postfix (RPN) and infix notations and evaluate them",
   "keywords": [
     "infix",
