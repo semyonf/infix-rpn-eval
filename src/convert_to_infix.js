@@ -54,7 +54,14 @@ module.exports = function (postfix) {
     }
   }
 
-  const tokens = postfix.split(' ');
+  let nums = postfix.split(new RegExp('[\\'+Object.keys(operators).join('\\')+']')),
+      ops = postfix.split(/[0-9]+/),
+      tmpTokens = [];
+      
+  for(let i = 0; i < nums.length; i++)
+    tmpTokens.push(nums[i], ops[i+1])
+
+  const tokens = tmpTokens.slice(0, tmpTokens.length-1)
 
   while (tokens.length > 1) {
     for (const i in tokens) {

@@ -16,7 +16,14 @@ module.exports = function (infix) {
     '(': operations.get('bracket'),
   });
 
-  const tokens = infix.split(' ');
+  let nums = infix.split(new RegExp('[\\'+Object.keys(operators).join('\\')+']')),
+      ops = infix.split(/[0-9]+/),
+      tmpTokens = [];
+      
+  for(let i = 0; i < nums.length; i++)
+    tmpTokens.push(nums[i], ops[i+1])
+
+  const tokens = tmpTokens.slice(0, tmpTokens.length-1)
   const outputStack = [];
   const operatorStack = [];
 
