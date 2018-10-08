@@ -5,7 +5,7 @@ const constants = require('./constants');
 
 /**
  * Evaluate postfix expression
- * @param postfix tokens must be space separated
+ * @param postfix {string} tokens must be space separated
  * @returns {number}
  */
 module.exports = function (postfix) {
