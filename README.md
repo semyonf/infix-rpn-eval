@@ -38,7 +38,7 @@ infixRpnEval.toPostfix = (infix) {...}
  * @param {string} postfix tokens must be space separated
  * @returns {string}
  */
-infixRpnEval.toPostfix = (postfix) {...}
+infixRpnEval.toInfix = (postfix) {...}
 
 /**
  * Evaluate postfix expression
