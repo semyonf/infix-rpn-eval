@@ -16,7 +16,6 @@ function evaluatePostfix(postfix) {
 
   for (let token of tokens) {
     if (!['+', '-', '/', '*', '^'].includes(token)) {
-
       token = token.toLowerCase();
 
       if (constants.has(token)) {
