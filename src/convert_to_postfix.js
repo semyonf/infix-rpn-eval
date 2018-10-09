@@ -1,21 +1,23 @@
+'use strict';
+
+const Assoc = require('./Associativity');
+const operations = require('./operations');
+
+const operators = Object.freeze({
+  '^': operations.get('exponentiation'),
+  '*': operations.get('multiplication'),
+  '/': operations.get('division'),
+  '+': operations.get('addition'),
+  '-': operations.get('subtraction'),
+  '(': operations.get('bracket'),
+});
+
 /**
  * Convert from infix to postfix notation
  * @param {string} infix tokens must be space separated
  * @returns {string}
  */
-module.exports = function (infix) {
-  const Assoc = require('./Associativity');
-  const operations = require('./operations');
-
-  const operators = Object.freeze({
-    '^': operations.get('exponentiation'),
-    '*': operations.get('multiplication'),
-    '/': operations.get('division'),
-    '+': operations.get('addition'),
-    '-': operations.get('subtraction'),
-    '(': operations.get('bracket'),
-  });
-
+function convertToPostfix(infix) {
   const tokens = infix.split(' ');
   const outputStack = [];
   const operatorStack = [];
@@ -65,4 +67,6 @@ module.exports = function (infix) {
     );
 
   return res.join(' ');
-};
+}
+
+module.exports = convertToPostfix;

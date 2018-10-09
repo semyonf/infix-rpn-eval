@@ -1,3 +1,5 @@
+'use strict';
+
 const Associativity = require('./Associativity');
 const operations = new Map([
   ['exponentiation',

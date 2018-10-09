@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @type {Map}
  */
@@ -8,7 +10,7 @@ const constants = require('./constants');
  * @param {string} postfix tokens must be space separated
  * @returns {number}
  */
-module.exports = function (postfix) {
+function evaluatePostfix(postfix) {
   const tokens = postfix.split(' ');
   const stack = [];
 
@@ -42,4 +44,6 @@ module.exports = function (postfix) {
   }
 
   return stack.pop();
-};
+}
+
+module.exports = evaluatePostfix;

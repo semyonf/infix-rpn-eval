@@ -1,3 +1,5 @@
+'use strict';
+
 const constants = new Map([
   ['pi', Math.PI],
   ['tau', Math.PI * 2],

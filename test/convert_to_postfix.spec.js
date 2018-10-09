@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const calc = require('../main');
 const expressionMaps = require('./resources/expression_maps');
