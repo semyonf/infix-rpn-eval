@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/taxnuke/infix-rpn-eval#readme",
   "devDependencies": {
+    "codeclimate-test-reporter": "^0.5.1",
     "eslint": "^5.3.0",
     "eslint-plugin-import": "^2.14.0",
     "husky": "^1.0.0-rc.13",

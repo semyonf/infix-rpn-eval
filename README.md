@@ -5,6 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/network)
 [![GitHub issues](https://img.shields.io/github/issues/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/issues)
 [![GitHub license](https://img.shields.io/github/license/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/blob/master/LICENSE)
+[![Stryker tested](https://img.shields.io/badge/Stryker-tested-green.svg)](https://img.shields.io/badge/Stryker-tested-green.svg)
 
 A JavaScript Implementation of Edsger Dijkstra's Shunting-yard algorithm. Works in Node.js and web browsers.
 
