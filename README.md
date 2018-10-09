@@ -17,9 +17,10 @@ $ npm install infix-rpn-eval
 ```js
 var infixRpnEval = require("infix-rpn-eval");
 
-infixRpnEval.toPostfix('2 + 3 * 3');      // '2 3 3 * +'
-infixRpnEval.toInfix('2 3 3 * +');        // '2 + 3 * 3'
-infixRpnEval.evaluatePostfix('2 3 3 * +') // 11
+infixRpnEval.toPostfix('2 + 3 * 3');       // '2 3 3 * +'
+infixRpnEval.toInfix('2 3 3 * +');         // '2 + 3 * 3'
+infixRpnEval.evaluatePostfix('2 3 3 * +'); // 11
+infixRpnEval.evaluateInfix('2 + 2 * 2');   // 6
 ```
 
 ## API
@@ -45,4 +46,11 @@ infixRpnEval.toPostfix = (postfix) {...}
  * @returns {number}
  */
 infixRpnEval.evaluatePostfix = (postfix) {...}
+
+/**
+ * Evaluate infix expression
+ * @param {string} infix tokens must be space separated
+ * @returns {number}
+ */
+infixRpnEval.evaluateInfix = (infix) {...}
 ```
