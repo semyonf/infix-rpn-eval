@@ -15,7 +15,13 @@
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore . --fix",
     "test": "mocha",
-    "mutate": "stryker run"
+    "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
+    "coverage": "istanbul cover _mocha",
+    "postcoverage": "mv ./coverage ./reports/coverage",
+    "premutate": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/mutation'; fi",
+    "mutate": "stryker run",
+    "show-coverage": "open ./reports/coverage/lcov-report/index.html",
+    "show-msi": "open ./reports/mutation/html/index.html"
   },
   "husky": {
     "hooks": {
@@ -36,6 +42,7 @@
     "eslint": "^5.3.0",
     "eslint-plugin-import": "^2.14.0",
     "husky": "^1.0.0-rc.13",
+    "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "stryker": "^0.25.1",
     "stryker-api": "^0.18.0",
