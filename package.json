@@ -13,7 +13,7 @@
   ],
   "main": "main.js",
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore .",
+    "pretest": "eslint --ignore-path .gitignore . --fix",
     "test": "mocha",
     "mutate": "stryker run"
   },
