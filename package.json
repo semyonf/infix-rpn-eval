@@ -14,14 +14,15 @@
   "main": "main.js",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore . --fix",
-    "test": "mocha",
+    "test": "jest",
     "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
-    "coverage": "istanbul cover _mocha",
+    "coverage": "jest --coverage",
     "postcoverage": "mv ./coverage ./reports/coverage",
     "premutate": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/mutation'; fi",
     "mutate": "stryker run",
     "show-coverage": "open ./reports/coverage/lcov-report/index.html",
-    "show-msi": "open ./reports/mutation/html/index.html"
+    "show-msi": "open ./reports/mutation/html/index.html",
+    "build": "tsc"
   },
   "husky": {
     "hooks": {
@@ -39,17 +40,18 @@
   },
   "homepage": "https://github.com/taxnuke/infix-rpn-eval#readme",
   "devDependencies": {
+    "@types/jest": "^28.1.6",
     "codeclimate-test-reporter": "^0.5.1",
     "eslint": "^5.3.0",
     "eslint-plugin-import": "^2.14.0",
     "husky": "^1.0.0-rc.13",
-    "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
+    "jest": "28.1.3",
     "stryker": "^0.25.1",
     "stryker-api": "^0.18.0",
     "stryker-html-reporter": "^0.15.0",
     "stryker-javascript-mutator": "^0.8.0",
     "stryker-mocha-framework": "^0.11.0",
-    "stryker-mocha-runner": "^0.13.0"
+    "stryker-mocha-runner": "^0.13.0",
+    "typescript": "4.7.4"
   }
 }
