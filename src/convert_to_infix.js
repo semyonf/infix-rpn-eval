@@ -65,6 +65,7 @@ function convertToInfix(postfix) {
 
       if (token in operators) {
         const operation = operators[token];
+        // @ts-ignore
         const operands = tokens.slice(i - 2, i);
 
         const opNode = new OpNode(
@@ -76,6 +77,7 @@ function convertToInfix(postfix) {
 
         // Tokens contain mixed data types, so
         // noinspection JSCheckFunctionSignatures
+        // @ts-ignore
         tokens.splice(i - 2, 3, opNode);
 
         break;
@@ -83,6 +85,7 @@ function convertToInfix(postfix) {
     }
   }
 
+  // @ts-ignore
   return tokens[0].getExpression();
 }
 

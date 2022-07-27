@@ -6,6 +6,7 @@ const constants = new Map([
   ['e', Math.E],
 ]);
 
+// @ts-ignore
 constants.set = constants.clear = constants.delete = () => {
   throw new Error('This map is frozen!');
 };

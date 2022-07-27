@@ -22,6 +22,7 @@ const operations = new Map([
   ],
 ]);
 
+// @ts-ignore
 operations.set = operations.clear = operations.delete = () => {
   throw new Error('This map is frozen!');
 };
