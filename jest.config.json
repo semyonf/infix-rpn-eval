@@ -1,6 +1,5 @@
 {
   "preset": "ts-jest",
-  "rootDir": "src/tests",
   "testEnvironment": "node",
   "collectCoverageFrom": ["src/**/*.ts", "!src/tests/**/*"]
 }

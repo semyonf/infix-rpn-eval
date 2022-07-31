@@ -1,9 +1,9 @@
-reports
 .idea
 .stryker-tmp
 .DS_Store
 dist
 .cache
+coverage
 
 # Logs
 logs
