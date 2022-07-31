@@ -1,11 +1,10 @@
 # infix-rpn-eval
 
-[![Build Status](https://travis-ci.org/taxnuke/infix-rpn-eval.svg?branch=master)](https://travis-ci.org/taxnuke/infix-rpn-eval)
+[![Build Status](https://travis-ci.org/semyonf/infix-rpn-eval.svg?branch=master)](https://travis-ci.org/semyonf/infix-rpn-eval)
 [![npm version](https://badge.fury.io/js/infix-rpn-eval.svg)](https://badge.fury.io/js/infix-rpn-eval)
-[![GitHub forks](https://img.shields.io/github/forks/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/network)
-[![GitHub issues](https://img.shields.io/github/issues/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/issues)
-[![GitHub license](https://img.shields.io/github/license/taxnuke/infix-rpn-eval.svg)](https://github.com/taxnuke/infix-rpn-eval/blob/master/LICENSE)
-[![Stryker tested](https://img.shields.io/badge/Stryker-tested-green.svg)](https://img.shields.io/badge/Stryker-tested-green.svg)
+[![GitHub forks](https://img.shields.io/github/forks/semyonf/infix-rpn-eval.svg)](https://github.com/semyonf/infix-rpn-eval/network)
+[![GitHub issues](https://img.shields.io/github/issues/semyonf/infix-rpn-eval.svg)](https://github.com/semyonf/infix-rpn-eval/issues)
+[![GitHub license](https://img.shields.io/github/license/semyonf/infix-rpn-eval.svg)](https://github.com/semyonf/infix-rpn-eval/blob/master/LICENSE)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b975d2aca75290c17cd5/maintainability)](https://codeclimate.com/github/semyonf/infix-rpn-eval/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b975d2aca75290c17cd5/test_coverage)](https://codeclimate.com/github/semyonf/infix-rpn-eval/test_coverage)
 
