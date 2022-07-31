@@ -10,7 +10,7 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm install
-      - run: npm test --coverage
+      - run: npm test -- --coverage
 #      - name: CodeClimate
 #        uses: paambaati/codeclimate-action@v2.7.5
 #        env:
