@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "prepare": "rm -rf .git/hooks && ln -s $(pwd)/git-hooks .git/hooks",
-    "pretest": "eslint . --fix",
+    "pretest": "eslint src --fix",
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
