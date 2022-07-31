@@ -2,10 +2,8 @@ reports
 .idea
 .stryker-tmp
 .DS_Store
-reports
 dist
 .cache
-tsconfig.tsbuildinfo
 
 # Logs
 logs

@@ -1,9 +1,4 @@
-'use strict';
-
-/**
- * @type {Map}
- */
-const constants = require('./constants');
+import constants from './constants';
 
 /**
  * Evaluate postfix expression
@@ -22,9 +17,11 @@ function evaluatePostfix(postfix) {
         token = constants.get(token);
       }
 
+      // @ts-expect-error temporary
       stack.push(parseFloat(token));
     } else {
       const operands = stack.splice(-2, 2);
+      // @ts-expect-error temporary
       stack.push(operands.reduce((prev, curr) => {
         switch (token) {
         case '+':
@@ -45,4 +42,4 @@ function evaluatePostfix(postfix) {
   return stack.pop();
 }
 
-module.exports = evaluatePostfix;
+export default evaluatePostfix;

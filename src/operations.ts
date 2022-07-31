@@ -1,6 +1,6 @@
-'use strict';
+import Associativity from './associativity';
 
-const Associativity = require('./Associativity');
+// todo make this into a readonly object
 const operations = new Map([
   ['exponentiation',
     { operator: '^', precedence: 4, associativity: Associativity.right }
@@ -22,9 +22,8 @@ const operations = new Map([
   ],
 ]);
 
-// @ts-ignore
 operations.set = operations.clear = operations.delete = () => {
   throw new Error('This map is frozen!');
 };
 
-module.exports = operations;
+export default operations;

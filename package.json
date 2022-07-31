@@ -1,6 +1,10 @@
 {
   "name": "infix-rpn-eval",
   "version": "0.1.1",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16 <17"
+  },
   "description": "Convert math expressions between postfix (RPN) and infix notations and evaluate them",
   "keywords": [
     "infix",
@@ -13,17 +17,11 @@
   ],
   "main": "src/index.ts",
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "build": "tsc --build tsconfig.build.json",
+    "prepare": "rm -rf .git/hooks && ln -s $(pwd)/git-hooks .git/hooks",
     "pretest": "eslint . --fix",
     "test": "jest",
-    "precoverage": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/coverage'; fi",
-    "coverage": "jest --coverage",
-    "postcoverage": "mv ./coverage ./reports/coverage",
-    "premutate": "if [ ! -d 'reports' ]; then mkdir 'reports'; else rm -rf 'reports/mutation'; fi",
-    "mutate": "stryker run",
-    "show-coverage": "open ./reports/coverage/lcov-report/index.html",
-    "show-msi": "open ./reports/mutation/html/index.html",
-    "build": "tsc"
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const calc = require('../main');
+import assert from 'assert';
+import * as calc from '../main';
 
 const problems = Object.freeze({
   'addition': new Map([
