@@ -2,6 +2,6 @@
   "extends": "./tsconfig.json",
   "exclude": ["src/tests"],
   "compilerOptions": {
-    "incremental": true
+    "incremental": true,
   }
 }

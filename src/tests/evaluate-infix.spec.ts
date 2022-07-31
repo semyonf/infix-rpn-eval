@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {evaluateInfix} from '../main';
+import {evaluateInfix} from '../index';
 
 describe('Infix evaluation', () => {
   it('is ok', () => {
