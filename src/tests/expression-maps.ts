@@ -1,8 +1,4 @@
-/**
- * Map with juxtaposition of infix and postfix
- * @type {Map<string, string>}
- */
-module.exports = new Map([
+export default new Map([
   ['2 + 3 ^ 3 * ( 1 + 4 )', '2 3 3 ^ 1 4 + * +'],
   ['2 * 2 * 2', '2 2 * 2 *'],
   ['( 3 + 4 ) * ( 1 + 2 )', '3 4 + 1 2 + *'],
