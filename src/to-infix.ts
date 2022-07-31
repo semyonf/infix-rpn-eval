@@ -27,7 +27,7 @@ class OperationNode {
 
       if (
         this.precedence >= this.rhs.precedence &&
-        this.associativity !== Associativity.right
+        this.associativity !== Associativity.Right
       ) {
         rhsExpression = `( ${rhsExpression} )`;
       }

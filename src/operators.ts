@@ -1,6 +1,6 @@
 export enum Associativity {
-  left = 'Left',
-  right = 'Right',
+  Left = 'L',
+  Right = 'R',
 }
 
 export type Operator =
@@ -12,11 +12,11 @@ export type Operator =
   | { isBracket: true; precedence: 0 };
 
 export const operators: Record<string, Operator> = {
-  exp: { operator: '^', precedence: 4, associativity: Associativity.right },
-  mul: { operator: '*', precedence: 3, associativity: Associativity.left },
-  div: { operator: '/', precedence: 3, associativity: Associativity.left },
-  add: { operator: '+', precedence: 2, associativity: Associativity.left },
-  sub: { operator: '-', precedence: 2, associativity: Associativity.left },
+  exp: { operator: '^', precedence: 4, associativity: Associativity.Right },
+  mul: { operator: '*', precedence: 3, associativity: Associativity.Left },
+  div: { operator: '/', precedence: 3, associativity: Associativity.Left },
+  add: { operator: '+', precedence: 2, associativity: Associativity.Left },
+  sub: { operator: '-', precedence: 2, associativity: Associativity.Left },
   bracket: { precedence: 0, isBracket: true },
 };
 

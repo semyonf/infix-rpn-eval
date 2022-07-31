@@ -16,16 +16,17 @@ export function toPostfix(infix: string): string {
       while (operatorStack.length) {
         const op2 = operatorStack[operatorStack.length - 1];
 
+        if ('isBracket' in op2 || 'isBracket' in op1) {
+          break;
+        }
+
         if (
-          // @ts-expect-error JavaScript leftovers
-          (op1.associativity === Associativity.left &&
+          (op1.associativity === Associativity.Left &&
             op1.precedence <= op2.precedence) ||
-          // @ts-expect-error JavaScript leftovers
-          (op1.associativity === Associativity.right &&
+          (op1.associativity === Associativity.Right &&
             op1.precedence < op2.precedence)
         ) {
           operatorStack.pop();
-          // @ts-expect-error JavaScript leftovers
           outputStack.push(op2.operator);
         } else {
           break;
@@ -33,22 +34,33 @@ export function toPostfix(infix: string): string {
       }
 
       operatorStack.push(op1);
-    } else if (token === ')') {
-      // @ts-expect-error JavaScript leftovers
-      while (!operatorStack[operatorStack.length - 1].isBracket) {
-        // @ts-expect-error JavaScript leftovers
-        outputStack.push(operatorStack.pop().operator);
-      }
-      operatorStack.pop();
-    } else {
-      outputStack.push(token);
+
+      continue;
     }
+
+    if (token === ')') {
+      while (!('isBracket' in operatorStack[operatorStack.length - 1])) {
+        outputStack.push(
+          // fixme
+          (operatorStack.pop() as unknown as Record<string, string>).operator,
+        );
+      }
+
+      operatorStack.pop();
+
+      continue;
+    }
+
+    outputStack.push(token);
   }
 
-  return (
-    outputStack
-      // @ts-expect-error JavaScript leftovers
-      .concat(operatorStack.reverse().map((operator) => operator.operator))
-      .join(' ')
-  );
+  return outputStack
+    .concat(
+      operatorStack.reverse().map(
+        (operator) =>
+          // fixme
+          (operator as unknown as Record<string, string>).operator,
+      ),
+    )
+    .join(' ');
 }
