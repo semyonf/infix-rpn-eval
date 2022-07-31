@@ -1,6 +1,6 @@
 # infix-rpn-eval
 
-[![Build Status](https://travis-ci.org/semyonf/infix-rpn-eval.svg?branch=master)](https://travis-ci.org/semyonf/infix-rpn-eval)
+![master](https://github.com/semyonf/infix-rpn-eval/actions/workflows/ci.yml/badge.svg?branch=master)
 [![npm version](https://badge.fury.io/js/infix-rpn-eval.svg)](https://badge.fury.io/js/infix-rpn-eval)
 [![GitHub forks](https://img.shields.io/github/forks/semyonf/infix-rpn-eval.svg)](https://github.com/semyonf/infix-rpn-eval/network)
 [![GitHub issues](https://img.shields.io/github/issues/semyonf/infix-rpn-eval.svg)](https://github.com/semyonf/infix-rpn-eval/issues)
