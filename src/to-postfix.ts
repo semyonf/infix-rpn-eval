@@ -1,5 +1,6 @@
 import { Associativity, infixOperators, Operator } from './operators';
 
+// todo: refactor this when everything else looks good
 export function toPostfix(infix: string): string {
   const tokens = infix.split(' ');
   const outputStack: string[] = [];

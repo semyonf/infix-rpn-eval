@@ -1,84 +1,82 @@
 import { Associativity, postfixOperators } from './operators';
 
-class OperationNode {
+class OperatorNode {
   constructor(
-    private operationSymbol: string,
+    private operator: string,
     private precedence: number,
     private associativity: Associativity,
-    private lhs: OperationNode | string,
-    private rhs: OperationNode | string,
+    private lhsOperand: OperatorNode | string,
+    private rhsOperand: OperatorNode | string,
   ) {}
 
+  // todo: refactor this second of all
   getExpression(): string {
     let lhsExpression: string;
 
-    if (this.lhs instanceof OperationNode) {
-      lhsExpression = this.lhs.getExpression();
+    if (this.lhsOperand instanceof OperatorNode) {
+      lhsExpression = this.lhsOperand.getExpression();
 
-      if (this.precedence > this.lhs.precedence) {
+      if (this.precedence > this.lhsOperand.precedence) {
         lhsExpression = `( ${lhsExpression} )`;
       }
     } else {
-      lhsExpression = this.lhs;
+      lhsExpression = this.lhsOperand;
     }
 
     let rhsExpression: string;
 
-    if (this.rhs instanceof OperationNode) {
-      rhsExpression = this.rhs.getExpression();
+    if (this.rhsOperand instanceof OperatorNode) {
+      rhsExpression = this.rhsOperand.getExpression();
 
       if (
-        this.precedence >= this.rhs.precedence &&
+        this.precedence >= this.rhsOperand.precedence &&
         this.associativity !== Associativity.R
       ) {
         rhsExpression = `( ${rhsExpression} )`;
       }
     } else {
-      rhsExpression = this.rhs;
+      rhsExpression = this.rhsOperand;
     }
 
-    return `${lhsExpression} ${this.operationSymbol} ${rhsExpression}`;
+    return `${lhsExpression} ${this.operator} ${rhsExpression}`;
   }
 }
 
 export function toInfix(postfix: string): string {
-  const tokens: Array<string | OperationNode> = postfix.split(' ');
+  const outputStack: Array<OperatorNode | string> = [];
 
-  while (tokens.length > 1) {
-    for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i]!;
+  for (const token of postfix.split(' ')) {
+    if (!(token in postfixOperators)) {
+      outputStack.push(token);
 
-      if (token instanceof OperationNode || !(token in postfixOperators)) {
-        continue;
-      }
+      continue;
+    }
 
-      const operation =
-        postfixOperators[token as keyof typeof postfixOperators];
+    // since we only have binary operators
+    const [rhsOperand, lhsOperand] = [outputStack.pop(), outputStack.pop()];
 
-      const [lhs, rhs] = tokens.slice(i - 2, i) as [
-        string | OperationNode,
-        string | OperationNode,
-      ];
+    if (rhsOperand === undefined || lhsOperand === undefined) {
+      throw new Error('Invalid expression');
+    }
 
-      const operationNode = new OperationNode(
+    const operation = postfixOperators[token as keyof typeof postfixOperators];
+
+    outputStack.push(
+      new OperatorNode(
         operation.operator,
         operation.precedence,
         operation.associativity,
-        lhs,
-        rhs,
-      );
-
-      tokens.splice(i - 2, 3, operationNode);
-
-      break;
-    }
+        lhsOperand,
+        rhsOperand,
+      ),
+    );
   }
 
-  const [first] = tokens;
+  const stackHead = outputStack.pop();
 
-  if (first instanceof OperationNode) {
-    return first.getExpression();
+  if (stackHead instanceof OperatorNode) {
+    return stackHead.getExpression();
   }
 
-  return first ?? '0';
+  return stackHead ?? '0';
 }
