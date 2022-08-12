@@ -11,7 +11,7 @@ const defaultMathConstants = {
   e: Math.E,
 };
 
-// todo: refactor
+// TODO: refactor
 export function evaluatePostfix(
   postfix: string,
   { evaluateMathConstants }: EvaluationParams = {
@@ -44,7 +44,7 @@ export function evaluatePostfix(
       continue;
     }
 
-    // todo: refactor
+    // TODO: refactor
     stack.push(
       stack.splice(-2, 2).reduce((lhs, rhs) => {
         switch (token) {

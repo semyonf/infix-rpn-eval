@@ -2,7 +2,7 @@ import { infixOperators } from './operators';
 import type { Operator } from './types';
 import { Associativity } from './types';
 
-// todo: refactor this when everything else looks good
+// TODO: refactor this when everything else looks good
 export function toPostfix(infix: string): string {
   const tokens = infix.split(' ');
   const outputStack: string[] = [];
@@ -15,7 +15,7 @@ export function toPostfix(infix: string): string {
       return;
     }
 
-    // todo: should throw exceptions on missing or excessive brackets
+    // TODO: should throw exceptions on missing or excessive brackets
     if (token === ')') {
       while (operatorStack.length) {
         const operator = (operatorStack.pop() as Operator).operator;
