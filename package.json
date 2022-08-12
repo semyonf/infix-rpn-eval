@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engineStrict": true,
   "engines": {
-    "node": ">=16 <17"
+    "node": ">=6"
   },
   "description": "Convert math expressions between postfix (RPN) and infix notations and evaluate them",
   "keywords": [
@@ -15,7 +15,7 @@
     "calculator",
     "rpn"
   ],
-  "main": "src/index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "prepare": "rm -rf .git/hooks && ln -s $(pwd)/git-hooks .git/hooks",
