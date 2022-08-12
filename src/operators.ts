@@ -2,8 +2,8 @@ import type { Operator } from './types';
 import { Associativity } from './types';
 
 const operators: Record<string, Operator> = {
-  oparen: { operator: '(', precedence: 4 },
-  cparen: { operator: ')', precedence: 4 },
+  oparen: { operator: '(', precedence: Number.POSITIVE_INFINITY },
+  cparen: { operator: ')', precedence: Number.POSITIVE_INFINITY },
   exp: { operator: '^', precedence: 3, associativity: Associativity.R },
   mul: { operator: '*', precedence: 2, associativity: Associativity.L },
   div: { operator: '/', precedence: 2, associativity: Associativity.L },

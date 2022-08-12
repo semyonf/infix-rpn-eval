@@ -8,25 +8,24 @@ export function toPostfix(infix: string): string {
   const outputStack: string[] = [];
   const operatorStack: Operator[] = [];
 
-  /**
-   * todo: should throw exceptions on missing or excessive brackets
-   */
-  for (const token of tokens) {
+  function processToken(token: string) {
     if (!(token in infixOperators)) {
       outputStack.push(token);
 
-      continue;
+      return;
     }
 
+    // todo: should throw exceptions on missing or excessive brackets
     if (token === ')') {
-      let lastOperator = operatorStack.pop();
+      while (operatorStack.length) {
+        const operator = (operatorStack.pop() as Operator).operator;
 
-      while (lastOperator && lastOperator.operator !== '(') {
-        outputStack.push(lastOperator.operator);
-        lastOperator = operatorStack.pop();
+        if (operator === '(') {
+          return;
+        }
+
+        outputStack.push(operator);
       }
-
-      continue;
     }
 
     const operator = infixOperators[token];
@@ -35,16 +34,10 @@ export function toPostfix(infix: string): string {
       throw new Error('Unknown operator');
     }
 
-    let lastOperator = operatorStack[operatorStack.length - 1];
+    while (operatorStack.length) {
+      const lastOperator = operatorStack[operatorStack.length - 1];
 
-    while (lastOperator) {
-      lastOperator = operatorStack[operatorStack.length - 1];
-
-      if (
-        !lastOperator ||
-        lastOperator.operator === '(' ||
-        operator.operator === '('
-      ) {
+      if (!lastOperator?.associativity || !operator.associativity) {
         break;
       }
 
@@ -63,6 +56,8 @@ export function toPostfix(infix: string): string {
 
     operatorStack.push(operator);
   }
+
+  tokens.forEach(processToken);
 
   return outputStack
     .concat(operatorStack.reverse().map((node) => node.operator))

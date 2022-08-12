@@ -5,7 +5,9 @@ export function toInfix(postfix: string): string {
   const outputStack: Array<OperatorNode | string> = [];
 
   for (const token of postfix.split(' ')) {
-    if (!(token in postfixOperators)) {
+    const operator = postfixOperators[token];
+
+    if (!operator) {
       outputStack.push(token);
 
       continue;
@@ -16,12 +18,6 @@ export function toInfix(postfix: string): string {
 
     if (rhsOperand === undefined || lhsOperand === undefined) {
       throw new Error('Invalid expression');
-    }
-
-    const operator = postfixOperators[token];
-
-    if (!operator) {
-      throw new Error('Unknown operator');
     }
 
     outputStack.push(new OperatorNode(operator, lhsOperand, rhsOperand));
