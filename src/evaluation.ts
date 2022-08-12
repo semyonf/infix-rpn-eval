@@ -1,39 +1,61 @@
 import { toPostfix } from './to-postfix';
 import { postfixOperators } from './operators';
 
-const mathConstants = {
+interface EvaluationParams {
+  evaluateMathConstants: false | Record<string, number>;
+}
+
+const defaultMathConstants = {
   pi: Math.PI,
   tau: Math.PI * 2,
   e: Math.E,
-} as const;
+};
 
-export function evaluatePostfix(postfix: string): number {
+export function evaluatePostfix(
+  postfix: string,
+  { evaluateMathConstants }: EvaluationParams = {
+    evaluateMathConstants: defaultMathConstants,
+  },
+): number {
+  if (
+    Object.keys(evaluateMathConstants)?.some((key) => !isNaN(parseInt(key)))
+  ) {
+    throw new Error('Constants cannot be numbers!');
+  }
+
   const tokens = postfix.split(' ').map((token) => token.toLowerCase());
   const stack: number[] = [];
 
   for (const token of tokens) {
     if (!Object.keys(postfixOperators).includes(token)) {
-      stack.push(
-        mathConstants[token as keyof typeof mathConstants] ?? parseFloat(token),
-      );
+      if (evaluateMathConstants) {
+        const mathConstant = evaluateMathConstants[token];
+
+        if (mathConstant !== undefined) {
+          stack.push(mathConstant);
+
+          continue;
+        }
+      }
+
+      stack.push(parseFloat(token));
 
       continue;
     }
 
-    const operands = stack.splice(-2, 2);
     stack.push(
-      operands.reduce((prev, curr) => {
+      stack.splice(-2, 2).reduce((lhs, rhs) => {
         switch (token) {
           case '+':
-            return prev + curr;
+            return lhs + rhs;
           case '-':
-            return prev - curr;
+            return lhs - rhs;
           case '*':
-            return prev * curr;
+            return lhs * rhs;
           case '/':
-            return prev / curr;
+            return lhs / rhs;
           case '^':
-            return Math.pow(prev, curr);
+            return Math.pow(lhs, rhs);
           default:
             throw new Error('Oopsie');
         }
@@ -44,6 +66,11 @@ export function evaluatePostfix(postfix: string): number {
   return stack.pop() ?? Number.NaN;
 }
 
-export function evaluateInfix(infix: string): number {
-  return evaluatePostfix(toPostfix(infix));
+export function evaluateInfix(
+  infix: string,
+  evaluationParams: EvaluationParams = {
+    evaluateMathConstants: defaultMathConstants,
+  },
+): number {
+  return evaluatePostfix(toPostfix(infix), evaluationParams);
 }
