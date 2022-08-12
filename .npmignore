@@ -1,1 +1,13 @@
 *.tsbuildinfo
+.idea
+.gitignore
+git-hooks
+.eslintrc.json
+.github
+src
+.npmignore
+.prettierrc
+jest.config.json
+tsconfig.build.json
+tsconfig.json
+package-lock.json

@@ -1,6 +1,6 @@
 {
   "name": "infix-rpn-eval",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "engineStrict": true,
   "engines": {
     "node": ">=6"
@@ -15,7 +15,8 @@
     "calculator",
     "rpn"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "prepare": "rm -rf .git/hooks && ln -s $(pwd)/git-hooks .git/hooks",

@@ -27,36 +27,16 @@ infixRpnEval.toPostfix('2 + 3 * 3');       // '2 3 3 * +'
 infixRpnEval.toInfix('2 3 3 * +');         // '2 + 3 * 3'
 infixRpnEval.evaluatePostfix('2 3 3 * +'); // 11
 infixRpnEval.evaluateInfix('2 + 2 * 2');   // 6
-```
 
-## API
-
-```js
-/**
- * Convert from infix to postfix notation
- * @param {string} infix tokens must be space separated
- * @returns {string}
- */
-infixRpnEval.toPostfix = (infix) {...}
-
-/**
- * Convert from postfix to infix notation
- * @param {string} postfix tokens must be space separated
- * @returns {string}
- */
-infixRpnEval.toInfix = (postfix) {...}
-
-/**
- * Evaluate postfix expression
- * @param {string} postfix tokens must be space separated
- * @returns {number}
- */
-infixRpnEval.evaluatePostfix = (postfix) {...}
-
-/**
- * Evaluate infix expression
- * @param {string} infix tokens must be space separated
- * @returns {number}
- */
-infixRpnEval.evaluateInfix = (infix) {...}
+infixRpnEval.evaluateInfix('a + b', {
+  evaluateMathConstants: {
+    // default
+    pi: Math.PI,
+    tau: Math.PI * 2,
+    e: Math.E,
+    // custom
+    a: 100,
+    b: 150
+  }
+}); // 250
 ```
