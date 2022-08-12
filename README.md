@@ -23,10 +23,10 @@ $ npm install infix-rpn-eval
 ```js
 var infixRpnEval = require("infix-rpn-eval");
 
-infixRpnEval.toPostfix('2 + 3 * 3');       // '2 3 3 * +'
-infixRpnEval.toInfix('2 3 3 * +');         // '2 + 3 * 3'
-infixRpnEval.evaluatePostfix('2 3 3 * +'); // 11
-infixRpnEval.evaluateInfix('2 + 2 * 2');   // 6
+infixRpnEval.toPostfix('2 + 3 ^ 3 * ( 1 + 4 )'); // '2 3 3 ^ 1 4 + * +'
+infixRpnEval.toInfix('2 3 3 * +');               // '2 + 3 * 3'
+infixRpnEval.evaluatePostfix('2 3 3 * +');       // 11
+infixRpnEval.evaluateInfix('2 + 2 * 2');         // 6
 
 infixRpnEval.evaluateInfix('a + b', {
   evaluateMathConstants: {
