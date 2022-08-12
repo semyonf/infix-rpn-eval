@@ -1,46 +1,5 @@
-import { Associativity, postfixOperators } from './operators';
-
-class OperatorNode {
-  constructor(
-    private operator: string,
-    private precedence: number,
-    private associativity: Associativity,
-    private lhsOperand: OperatorNode | string,
-    private rhsOperand: OperatorNode | string,
-  ) {}
-
-  // todo: refactor this second of all
-  getExpression(): string {
-    let lhsExpression: string;
-
-    if (this.lhsOperand instanceof OperatorNode) {
-      lhsExpression = this.lhsOperand.getExpression();
-
-      if (this.precedence > this.lhsOperand.precedence) {
-        lhsExpression = `( ${lhsExpression} )`;
-      }
-    } else {
-      lhsExpression = this.lhsOperand;
-    }
-
-    let rhsExpression: string;
-
-    if (this.rhsOperand instanceof OperatorNode) {
-      rhsExpression = this.rhsOperand.getExpression();
-
-      if (
-        this.precedence >= this.rhsOperand.precedence &&
-        this.associativity !== Associativity.R
-      ) {
-        rhsExpression = `( ${rhsExpression} )`;
-      }
-    } else {
-      rhsExpression = this.rhsOperand;
-    }
-
-    return `${lhsExpression} ${this.operator} ${rhsExpression}`;
-  }
-}
+import { postfixOperators } from './operators';
+import { OperatorNode } from './operator-node';
 
 export function toInfix(postfix: string): string {
   const outputStack: Array<OperatorNode | string> = [];
@@ -59,17 +18,13 @@ export function toInfix(postfix: string): string {
       throw new Error('Invalid expression');
     }
 
-    const operation = postfixOperators[token as keyof typeof postfixOperators];
+    const operator = postfixOperators[token];
 
-    outputStack.push(
-      new OperatorNode(
-        operation.operator,
-        operation.precedence,
-        operation.associativity,
-        lhsOperand,
-        rhsOperand,
-      ),
-    );
+    if (!operator) {
+      throw new Error('Unknown operator');
+    }
+
+    outputStack.push(new OperatorNode(operator, lhsOperand, rhsOperand));
   }
 
   const stackHead = outputStack.pop();

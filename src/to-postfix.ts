@@ -1,4 +1,6 @@
-import { Associativity, infixOperators, Operator } from './operators';
+import { infixOperators } from './operators';
+import type { Operator } from './types';
+import { Associativity } from './types';
 
 // todo: refactor this when everything else looks good
 export function toPostfix(infix: string): string {
@@ -10,6 +12,12 @@ export function toPostfix(infix: string): string {
    * todo: should throw exceptions on missing or excessive brackets
    */
   for (const token of tokens) {
+    if (!(token in infixOperators)) {
+      outputStack.push(token);
+
+      continue;
+    }
+
     if (token === ')') {
       let lastOperator = operatorStack.pop();
 
@@ -21,13 +29,12 @@ export function toPostfix(infix: string): string {
       continue;
     }
 
-    if (!(token in infixOperators)) {
-      outputStack.push(token);
+    const operator = infixOperators[token];
 
-      continue;
+    if (!operator) {
+      throw new Error('Unknown operator');
     }
 
-    const operator = infixOperators[token as keyof typeof infixOperators]!;
     let lastOperator = operatorStack[operatorStack.length - 1];
 
     while (lastOperator) {
@@ -58,6 +65,6 @@ export function toPostfix(infix: string): string {
   }
 
   return outputStack
-    .concat(operatorStack.reverse().map((operator) => operator.operator))
+    .concat(operatorStack.reverse().map((node) => node.operator))
     .join(' ');
 }

@@ -1,32 +1,26 @@
-export enum Associativity {
-  L = 'L',
-  R = 'R',
-}
+import type { Operator } from './types';
+import { Associativity } from './types';
 
-export interface Operator {
-  associativity: Associativity;
-  operator: string;
-  precedence: number;
-}
+const operators: Record<string, Operator> = {
+  oparen: { operator: '(', precedence: 4 },
+  cparen: { operator: ')', precedence: 4 },
+  exp: { operator: '^', precedence: 3, associativity: Associativity.R },
+  mul: { operator: '*', precedence: 2, associativity: Associativity.L },
+  div: { operator: '/', precedence: 2, associativity: Associativity.L },
+  add: { operator: '+', precedence: 1, associativity: Associativity.L },
+  sub: { operator: '-', precedence: 1, associativity: Associativity.L },
+};
 
-export const operators = {
-  exp: { operator: '^', precedence: 4, associativity: Associativity.R },
-  mul: { operator: '*', precedence: 3, associativity: Associativity.L },
-  div: { operator: '/', precedence: 3, associativity: Associativity.L },
-  add: { operator: '+', precedence: 2, associativity: Associativity.L },
-  sub: { operator: '-', precedence: 2, associativity: Associativity.L },
-  bkt: { operator: '(', precedence: 0, associativity: Associativity.L },
-} as const;
+export const postfixOperators: Record<string, Operator> = {
+  '^': operators['exp'] as Operator,
+  '*': operators['mul'] as Operator,
+  '/': operators['div'] as Operator,
+  '+': operators['add'] as Operator,
+  '-': operators['sub'] as Operator,
+};
 
-export const postfixOperators = {
-  '^': operators.exp,
-  '*': operators.mul,
-  '/': operators.div,
-  '+': operators.add,
-  '-': operators.sub,
-} as const;
-
-export const infixOperators = {
+export const infixOperators: Record<string, Operator> = {
   ...postfixOperators,
-  '(': operators.bkt,
-} as const;
+  '(': operators['oparen'] as Operator,
+  ')': operators['cparen'] as Operator,
+};
