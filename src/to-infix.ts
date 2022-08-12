@@ -2,7 +2,7 @@ import { Associativity, postfixOperators } from './operators';
 
 class OperationNode {
   constructor(
-    private operator: string,
+    private operationSymbol: string,
     private precedence: number,
     private associativity: Associativity,
     private lhs: OperationNode | number,
@@ -10,7 +10,7 @@ class OperationNode {
   ) {}
 
   getExpression(): string {
-    let lhsExpression, rhsExpression;
+    let lhsExpression: string;
 
     if (this.lhs instanceof OperationNode) {
       lhsExpression = this.lhs.getExpression();
@@ -19,23 +19,25 @@ class OperationNode {
         lhsExpression = `( ${lhsExpression} )`;
       }
     } else {
-      lhsExpression = this.lhs;
+      lhsExpression = String(this.lhs);
     }
+
+    let rhsExpression: string;
 
     if (this.rhs instanceof OperationNode) {
       rhsExpression = this.rhs.getExpression();
 
       if (
         this.precedence >= this.rhs.precedence &&
-        this.associativity !== Associativity.Right
+        this.associativity !== Associativity.R
       ) {
         rhsExpression = `( ${rhsExpression} )`;
       }
     } else {
-      rhsExpression = this.rhs;
+      rhsExpression = String(this.rhs);
     }
 
-    return `${lhsExpression} ${this.operator} ${rhsExpression}`;
+    return `${lhsExpression} ${this.operationSymbol} ${rhsExpression}`;
   }
 }
 
@@ -45,14 +47,15 @@ export function toInfix(postfix: string): string {
 
   while (tokens.length > 1) {
     for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
+      const token = tokens[i]!;
 
       if (token instanceof OperationNode) {
         continue;
       }
 
       if (token in postfixOperators) {
-        const operation = postfixOperators[token];
+        const operation =
+          postfixOperators[token as keyof typeof postfixOperators];
 
         const [lhs, rhs] = tokens.slice(i - 2, i) as [
           number | OperationNode,

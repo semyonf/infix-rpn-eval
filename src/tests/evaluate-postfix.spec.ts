@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { evaluatePostfix } from '../index';
 
-const problems = Object.freeze({
+const problems = {
   add: new Map([
     ['3 2 +', 5],
     ['3 3 3 + +', 9],
@@ -29,12 +29,14 @@ const problems = Object.freeze({
     ['3 2 + 3 * 2 ^ 25 - 20 /', 10],
     ['30.2 0.2 - 3 / 2 ^', 100],
   ]),
-});
+} as const;
 
 describe('Evaluation', () => {
   Object.keys(problems).forEach((kindOfProblems) => {
     it(`Handles ${kindOfProblems}`, () => {
-      for (const [problem, expected] of problems[kindOfProblems]) {
+      for (const [problem, expected] of problems[
+        kindOfProblems as keyof typeof problems
+      ]) {
         const actual = evaluatePostfix(problem);
         assert.strictEqual(actual, expected);
       }

@@ -1,6 +1,5 @@
 import { Associativity, infixOperators, Operator } from './operators';
 
-// todo: refactor
 export function toPostfix(infix: string): string {
   const tokens = infix.split(' ');
   const outputStack: string[] = [];
@@ -10,57 +9,54 @@ export function toPostfix(infix: string): string {
    * todo: should throw exceptions on missing or excessive brackets
    */
   for (const token of tokens) {
-    if (token in infixOperators) {
-      const op1 = infixOperators[token as keyof typeof infixOperators];
-
-      while (operatorStack.length) {
-        const op2 = operatorStack[operatorStack.length - 1];
-
-        if ('isBracket' in op2 || 'isBracket' in op1) {
-          break;
-        }
-
-        if (
-          (op1.associativity === Associativity.Left &&
-            op1.precedence <= op2.precedence) ||
-          (op1.associativity === Associativity.Right &&
-            op1.precedence < op2.precedence)
-        ) {
-          operatorStack.pop();
-          outputStack.push(op2.operator);
-        } else {
-          break;
-        }
-      }
-
-      operatorStack.push(op1);
-
-      continue;
-    }
-
     if (token === ')') {
-      while (!('isBracket' in operatorStack[operatorStack.length - 1])) {
-        outputStack.push(
-          // fixme
-          (operatorStack.pop() as unknown as Record<string, string>).operator,
-        );
-      }
+      let lastOperator = operatorStack.pop();
 
-      operatorStack.pop();
+      while (lastOperator && lastOperator.operator !== '(') {
+        outputStack.push(lastOperator.operator);
+        lastOperator = operatorStack.pop();
+      }
 
       continue;
     }
 
-    outputStack.push(token);
+    if (!(token in infixOperators)) {
+      outputStack.push(token);
+
+      continue;
+    }
+
+    const operator = infixOperators[token as keyof typeof infixOperators]!;
+    let lastOperator = operatorStack[operatorStack.length - 1];
+
+    while (lastOperator) {
+      lastOperator = operatorStack[operatorStack.length - 1];
+
+      if (
+        !lastOperator ||
+        lastOperator.operator === '(' ||
+        operator.operator === '('
+      ) {
+        break;
+      }
+
+      if (
+        (operator.associativity === Associativity.L &&
+          operator.precedence <= lastOperator.precedence) ||
+        (operator.associativity === Associativity.R &&
+          operator.precedence < lastOperator.precedence)
+      ) {
+        operatorStack.pop();
+        outputStack.push(lastOperator.operator);
+      } else {
+        break;
+      }
+    }
+
+    operatorStack.push(operator);
   }
 
   return outputStack
-    .concat(
-      operatorStack.reverse().map(
-        (operator) =>
-          // fixme
-          (operator as unknown as Record<string, string>).operator,
-      ),
-    )
+    .concat(operatorStack.reverse().map((operator) => operator.operator))
     .join(' ');
 }

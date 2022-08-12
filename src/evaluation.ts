@@ -13,7 +13,9 @@ export function evaluatePostfix(postfix: string): number {
 
   for (const token of tokens) {
     if (!Object.keys(postfixOperators).includes(token)) {
-      stack.push(mathConstants[token] ?? parseFloat(token));
+      stack.push(
+        mathConstants[token as keyof typeof mathConstants] ?? parseFloat(token),
+      );
 
       continue;
     }

@@ -1,24 +1,22 @@
 export enum Associativity {
-  Left = 'L',
-  Right = 'R',
+  L = 'L',
+  R = 'R',
 }
 
-export type Operator =
-  | {
-      associativity: Associativity;
-      operator: string;
-      precedence: number;
-    }
-  | { isBracket: true; precedence: 0 };
+export interface Operator {
+  associativity: Associativity;
+  operator: string;
+  precedence: number;
+}
 
-export const operators: Record<string, Operator> = {
-  exp: { operator: '^', precedence: 4, associativity: Associativity.Right },
-  mul: { operator: '*', precedence: 3, associativity: Associativity.Left },
-  div: { operator: '/', precedence: 3, associativity: Associativity.Left },
-  add: { operator: '+', precedence: 2, associativity: Associativity.Left },
-  sub: { operator: '-', precedence: 2, associativity: Associativity.Left },
-  bracket: { precedence: 0, isBracket: true },
-};
+export const operators = {
+  exp: { operator: '^', precedence: 4, associativity: Associativity.R },
+  mul: { operator: '*', precedence: 3, associativity: Associativity.L },
+  div: { operator: '/', precedence: 3, associativity: Associativity.L },
+  add: { operator: '+', precedence: 2, associativity: Associativity.L },
+  sub: { operator: '-', precedence: 2, associativity: Associativity.L },
+  bkt: { operator: '(', precedence: 0, associativity: Associativity.L },
+} as const;
 
 export const postfixOperators = {
   '^': operators.exp,
@@ -30,5 +28,5 @@ export const postfixOperators = {
 
 export const infixOperators = {
   ...postfixOperators,
-  '(': operators.bracket,
+  '(': operators.bkt,
 } as const;
