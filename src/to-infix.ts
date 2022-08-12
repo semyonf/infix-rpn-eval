@@ -5,8 +5,8 @@ class OperationNode {
     private operationSymbol: string,
     private precedence: number,
     private associativity: Associativity,
-    private lhs: OperationNode | number,
-    private rhs: OperationNode | number,
+    private lhs: OperationNode | string,
+    private rhs: OperationNode | string,
   ) {}
 
   getExpression(): string {
@@ -19,7 +19,7 @@ class OperationNode {
         lhsExpression = `( ${lhsExpression} )`;
       }
     } else {
-      lhsExpression = String(this.lhs);
+      lhsExpression = this.lhs;
     }
 
     let rhsExpression: string;
@@ -34,14 +34,13 @@ class OperationNode {
         rhsExpression = `( ${rhsExpression} )`;
       }
     } else {
-      rhsExpression = String(this.rhs);
+      rhsExpression = this.rhs;
     }
 
     return `${lhsExpression} ${this.operationSymbol} ${rhsExpression}`;
   }
 }
 
-// todo clean this up
 export function toInfix(postfix: string): string {
   const tokens: Array<string | OperationNode> = postfix.split(' ');
 
@@ -49,33 +48,37 @@ export function toInfix(postfix: string): string {
     for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i]!;
 
-      if (token instanceof OperationNode) {
+      if (token instanceof OperationNode || !(token in postfixOperators)) {
         continue;
       }
 
-      if (token in postfixOperators) {
-        const operation =
-          postfixOperators[token as keyof typeof postfixOperators];
+      const operation =
+        postfixOperators[token as keyof typeof postfixOperators];
 
-        const [lhs, rhs] = tokens.slice(i - 2, i) as [
-          number | OperationNode,
-          number | OperationNode,
-        ];
+      const [lhs, rhs] = tokens.slice(i - 2, i) as [
+        string | OperationNode,
+        string | OperationNode,
+      ];
 
-        const operationNode = new OperationNode(
-          operation.operator,
-          operation.precedence,
-          operation.associativity,
-          lhs,
-          rhs,
-        );
+      const operationNode = new OperationNode(
+        operation.operator,
+        operation.precedence,
+        operation.associativity,
+        lhs,
+        rhs,
+      );
 
-        tokens.splice(i - 2, 3, operationNode);
+      tokens.splice(i - 2, 3, operationNode);
 
-        break;
-      }
+      break;
     }
   }
 
-  return (tokens[0] as OperationNode).getExpression();
+  const [first] = tokens;
+
+  if (first instanceof OperationNode) {
+    return first.getExpression();
+  }
+
+  return first ?? '0';
 }
