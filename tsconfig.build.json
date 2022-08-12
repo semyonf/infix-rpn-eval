@@ -4,6 +4,8 @@
   "compilerOptions": {
     "declaration": true,
     "removeComments": true,
-    "incremental": true
+    "incremental": true,
+    "outDir": "./dist",
+    "noEmit": false
   }
 }
