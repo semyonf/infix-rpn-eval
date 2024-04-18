@@ -19,7 +19,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
-    "prepare": "rm -rf .git/hooks && ln -s $(pwd)/git-hooks .git/hooks",
+    "prepare": "git config core.hooksPath git-hooks || echo 'Not in a git repo'",
     "pretest": "eslint src --fix",
     "test": "jest",
     "typecheck": "tsc --noEmit"
