@@ -4,11 +4,36 @@ import { Associativity } from './types';
 const operators: Record<string, Operator> = {
   oparen: { operator: '(', precedence: Number.POSITIVE_INFINITY },
   cparen: { operator: ')', precedence: Number.POSITIVE_INFINITY },
-  exp: { operator: '^', precedence: 3, associativity: Associativity.R },
-  mul: { operator: '*', precedence: 2, associativity: Associativity.L },
-  div: { operator: '/', precedence: 2, associativity: Associativity.L },
-  add: { operator: '+', precedence: 1, associativity: Associativity.L },
-  sub: { operator: '-', precedence: 1, associativity: Associativity.L },
+  exp: {
+    operator: '^',
+    precedence: 3,
+    associativity: Associativity.R,
+    operation: (a, b) => Math.pow(a, b)
+  },
+  mul: {
+    operator: '*',
+    precedence: 2,
+    associativity: Associativity.L,
+    operation: (a, b) => a * b
+  },
+  div: {
+    operator: '/',
+    precedence: 2,
+    associativity: Associativity.L,
+    operation: (a, b) => a / b
+  },
+  add: {
+    operator: '+',
+    precedence: 1,
+    associativity: Associativity.L,
+    operation: (a, b) => a + b
+  },
+  sub: {
+    operator: '-',
+    precedence: 1,
+    associativity: Associativity.L,
+    operation: (a, b) => a - b
+  },
 };
 
 export const postfixOperators: Record<string, Operator> = {

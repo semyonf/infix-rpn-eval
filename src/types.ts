@@ -7,4 +7,5 @@ export interface Operator {
   associativity?: Associativity;
   precedence: number;
   operator: string;
+  operation?: (a: number, b: number) => number;
 }
