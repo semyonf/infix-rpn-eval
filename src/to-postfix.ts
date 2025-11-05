@@ -2,7 +2,70 @@ import { infixOperators } from './operators';
 import type { Operator } from './types';
 import { Associativity } from './types';
 
-// TODO: refactor this when everything else looks good
+function processClosingBracket(
+  operatorStack: Operator[],
+  outputStack: string[]
+): void {
+  let foundMatchingBracket = false;
+
+  while (operatorStack.length) {
+    const operator = (operatorStack.pop() as Operator).operator;
+
+    if (operator === '(') {
+      foundMatchingBracket = true;
+      return;
+    }
+
+    outputStack.push(operator);
+  }
+
+  if (!foundMatchingBracket) {
+    throw new Error('Mismatched brackets: closing bracket without matching opening bracket');
+  }
+}
+
+function shouldPopOperator(
+  currentOperator: Operator,
+  lastOperator: Operator
+): boolean {
+  if (!lastOperator?.associativity || !currentOperator.associativity) {
+    return false;
+  }
+
+  return (
+    (currentOperator.associativity === Associativity.L &&
+      currentOperator.precedence <= lastOperator.precedence) ||
+    (currentOperator.associativity === Associativity.R &&
+      currentOperator.precedence < lastOperator.precedence)
+  );
+}
+
+function processOperatorToken(
+  operator: Operator,
+  operatorStack: Operator[],
+  outputStack: string[]
+): void {
+  while (operatorStack.length) {
+    const lastOperator = operatorStack[operatorStack.length - 1];
+
+    if (lastOperator && shouldPopOperator(operator, lastOperator)) {
+      operatorStack.pop();
+      outputStack.push(lastOperator.operator);
+    } else {
+      break;
+    }
+  }
+
+  operatorStack.push(operator);
+}
+
+function validateBrackets(operatorStack: Operator[]): void {
+  const unclosedBrackets = operatorStack.filter((op) => op.operator === '(');
+  if (unclosedBrackets.length > 0) {
+    throw new Error('Mismatched brackets: unclosed opening bracket(s)');
+  }
+}
+
 export function toPostfix(infix: string): string {
   const tokens = infix.split(' ');
   const outputStack: string[] = [];
@@ -11,21 +74,12 @@ export function toPostfix(infix: string): string {
   function processToken(token: string) {
     if (!(token in infixOperators)) {
       outputStack.push(token);
-
       return;
     }
 
-    // TODO: should throw exceptions on missing or excessive brackets
     if (token === ')') {
-      while (operatorStack.length) {
-        const operator = (operatorStack.pop() as Operator).operator;
-
-        if (operator === '(') {
-          return;
-        }
-
-        outputStack.push(operator);
-      }
+      processClosingBracket(operatorStack, outputStack);
+      return;
     }
 
     const operator = infixOperators[token];
@@ -34,30 +88,12 @@ export function toPostfix(infix: string): string {
       throw new Error('Unknown operator');
     }
 
-    while (operatorStack.length) {
-      const lastOperator = operatorStack[operatorStack.length - 1];
-
-      if (!lastOperator?.associativity || !operator.associativity) {
-        break;
-      }
-
-      if (
-        (operator.associativity === Associativity.L &&
-          operator.precedence <= lastOperator.precedence) ||
-        (operator.associativity === Associativity.R &&
-          operator.precedence < lastOperator.precedence)
-      ) {
-        operatorStack.pop();
-        outputStack.push(lastOperator.operator);
-      } else {
-        break;
-      }
-    }
-
-    operatorStack.push(operator);
+    processOperatorToken(operator, operatorStack, outputStack);
   }
 
   tokens.forEach(processToken);
+
+  validateBrackets(operatorStack);
 
   return outputStack
     .concat(operatorStack.reverse().map((node) => node.operator))
